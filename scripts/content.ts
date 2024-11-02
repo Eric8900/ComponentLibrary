@@ -11,7 +11,7 @@ import { visit } from "unist-util-visit";
 import { Documents } from '@/settings/documents';
 import { Paths } from "@/lib/pageroutes";
 
-const docsDir = path.join(process.cwd(), "contents/docs");
+const componentsDir = path.join(process.cwd(), "contents/components");
 const outputDir = path.join(process.cwd(), "public", "search-data");
 
 function isRoute(node: Paths): node is Extract<Paths, { href: string; title: string }> {
@@ -19,7 +19,7 @@ function isRoute(node: Paths): node is Extract<Paths, { href: string; title: str
 }
 
 function createSlug(filePath: string): string {
-  const relativePath = path.relative(docsDir, filePath);
+  const relativePath = path.relative(componentsDir, filePath);
   const parsed = path.parse(relativePath);
 
   const slugPath = parsed.dir ? `${parsed.dir}/${parsed.name}` : parsed.name;
@@ -33,20 +33,20 @@ function createSlug(filePath: string): string {
 }
 
 function findDocumentBySlug(slug: string): Paths | null {
-  function searchDocs(docs: Paths[], currentPath = ""): Paths | null {
-    for (const doc of docs) {
+  function searchcomponents(components: Paths[], currentPath = ""): Paths | null {
+    for (const doc of components) {
       if (isRoute(doc)) {
         const fullPath = currentPath + doc.href;
         if (fullPath === slug) return doc;
         if (doc.items) {
-          const found: Paths | null = searchDocs(doc.items, fullPath);
+          const found: Paths | null = searchcomponents(doc.items, fullPath);
           if (found) return found;
         }
       }
     }
     return null;
   }
-  return searchDocs(Documents);
+  return searchcomponents(Documents);
 }
 
 async function ensureDirectoryExists(dir: string) {
@@ -120,7 +120,7 @@ async function convertMdxToJson() {
   try {
     await ensureDirectoryExists(outputDir);
 
-    const mdxFiles = await getMdxFiles(docsDir);
+    const mdxFiles = await getMdxFiles(componentsDir);
     const combinedData = [];
 
     for (const file of mdxFiles) {

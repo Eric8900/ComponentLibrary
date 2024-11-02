@@ -2,23 +2,13 @@ import { Paths } from "@/lib/pageroutes";
 
 export const Documents: Paths[] = [
   {
-    title: "Introduction",
-    href: "/introduction",
+    title: "Install Next.js",
+    href: "/install-nextjs",
     heading: "Getting started",
-    items: [
-      {
-        title: "Installation",
-        href: "/installation",
-      },
-      {
-        title: "Setup",
-        href: "/setup",
-      },
-      {
-        title: "Changelog",
-        href: "/changelog",
-      },
-    ],
+  },
+  {
+    title: "Install Tailwind",
+    href: "/install-tailwind",
   },
   {
     spacer: true,
@@ -26,7 +16,7 @@ export const Documents: Paths[] = [
   {
     title: "Navigation",
     href: "/navigation",
-    heading: "Documents",
+    heading: "Components",
   },
   {
     title: "Structure",

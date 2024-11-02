@@ -1,0 +1,64 @@
+---
+title: Install Tailwind
+description: This guide covers the installation of TailwindCSS.
+keywords: ["installation", "github", "node", "guide", "tailwind"]
+---
+
+<Step>
+<StepItem title="Create a new project">
+
+  ```bash
+  npx create-next-app@latest my-project --typescript --eslint
+  cd my-project
+  ```
+
+</StepItem>
+<StepItem title="Install TailwindCSS">
+  ```bash
+  npm install -D tailwindcss postcss autoprefixer
+  npx tailwindcss init -p
+  ```
+
+</StepItem>
+<StepItem title="Configure your template paths">
+  tailwind.config.ts / tailwind.config.js
+  ```jsx {3-10} showLineNumbers
+    /** @type {import('tailwindcss').Config} */
+    module.exports = {
+      content: [
+        "./app/**/*.{js,ts,jsx,tsx,mdx}",
+        "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+        "./components/**/*.{js,ts,jsx,tsx,mdx}",
+
+        // Or if using `src` directory:
+        "./src/**/*.{js,ts,jsx,tsx,mdx}",
+      ],
+      theme: {
+        extend: {},
+      },
+      plugins: [],
+    };
+  ```
+</StepItem>
+<StepItem title="Add the Tailwind directives to your CSS">
+  globals.css
+  ```css
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  ```
+</StepItem>
+<StepItem title="Start your build process">
+  ```bash
+  npm run dev
+  ```
+</StepItem>
+<StepItem title="Start using Tailwind">
+index.tsx / index.jsx
+  ```typescript
+  export default function Home() {
+    return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  }
+  ```
+</StepItem>
+</Step>

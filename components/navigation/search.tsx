@@ -45,7 +45,7 @@ export default function Search() {
       if (isOpen && event.key === "Enter" && filteredResults.length > 2) {
         const selected = filteredResults[0];
         if ("href" in selected) {
-          window.location.href = `/docs${selected.href}`;
+          window.location.href = `/components${selected.href}`;
           setIsOpen(false);
         }
       }
@@ -66,7 +66,7 @@ export default function Search() {
     }
   }, [searchedInput, debouncedSearch]);
 
-  function renderDocuments(documents: any[], parentHref: string = "/docs"): React.ReactNode[] {
+  function renderDocuments(documents: any[], parentHref: string = "/components"): React.ReactNode[] {
     if (!documents || !Array.isArray(documents)) {
       return [];
     }
@@ -160,7 +160,7 @@ export default function Search() {
                           className={cn(
                             "w-full p-3 flex flex-col gap-0.5 text-[15px] rounded-sm hover:bg-neutral-100 dark:hover:bg-neutral-900"
                           )}
-                          href={`/docs${item.href}`}
+                          href={`/components${item.href}`}
                         >
                           <div className="flex items-center h-full w-fit gap-x-2">
                             <LuFileText className="h-[1.1rem] w-[1.1rem]" /> {item.title}

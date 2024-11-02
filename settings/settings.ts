@@ -1,18 +1,18 @@
-export const url = "https://rubix-documents.vercel.app";
+export const url = "https://eric-components.vercel.app";
 export const siteicon = "/icon.png";
 
 export const gtm = "GTM-XXXXXXX";
 export const gtmconnected = true;
 
 export const sitename = "Documents";
-export const description = "This comprehensive documentation template, crafted with Next.js and available as open-source, delivers a sleek and responsive design, tailored to meet all your project documentation requirements.";
-export const keywords = ["Next.js", "documentation", "Rubix Studios", "open source", "SEO"];
+export const description = "This comprehensive component library.";
+export const keywords = ["Next.js", "documentation", "open source", "SEO"];
 export const urlimage = "/images/og-image.png";
-export const imagealt = "Rubix Studios Documentation";
-export const twitterhandle = "@RubixStudios";
+export const imagealt = "Component Library";
+export const twitterhandle = "@ericchen890";
 
-export const companyname = "Rubix Studios";
-export const companylink = "https://www.rubixstudios.com.au";
+export const companyname = "Component Library";
+export const companylink = "https://www.pane.fyi";
 
 export const branding = true;
 export const rightsidebar = true;

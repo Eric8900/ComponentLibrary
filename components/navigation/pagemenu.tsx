@@ -6,10 +6,10 @@ import SubLink from "@/components/navigation/sublink";
 
 export default function PageMenu({ isSheet = false }) {
   const pathname = usePathname();
-  if (!pathname.startsWith("/docs")) return null;
+  if (!pathname.startsWith("/components")) return null;
 
   return (
-    <div className="flex flex-col gap-3.5 mt-5 pb-6">
+    <div className="flex flex-col mt-5 pb-6">
       {Routes.map((item, index) => {
         if ('spacer' in item) {
           return (
@@ -24,7 +24,7 @@ export default function PageMenu({ isSheet = false }) {
             <SubLink
               {...{
                 ...item,
-                href: `/docs${item.href}`,
+                href: `/components${item.href}`,
                 level: 0,
                 isSheet,
               }}
