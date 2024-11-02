@@ -9,7 +9,7 @@ export default function PageMenu({ isSheet = false }) {
   if (!pathname.startsWith("/components")) return null;
 
   return (
-    <div className="flex flex-col mt-5 pb-6">
+    <div className="flex flex-col mt-5 pb-6 font-light">
       {Routes.map((item, index) => {
         if ('spacer' in item) {
           return (
