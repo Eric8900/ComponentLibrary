@@ -4,6 +4,7 @@ export const Navigations = [
   {
     title: "Components",
     href: `/components${PageRoutes[0].href}`,
+    external: false
   },
 ];
 
