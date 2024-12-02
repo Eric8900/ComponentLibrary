@@ -12,7 +12,7 @@ export const imagealt = "Component Library";
 export const twitterhandle = "@ericchen890";
 
 export const companyname = "EComponents";
-export const companylink = "https://www.pane.fyi";
+export const companylink = "https://eric-components.vercel.app";
 
 export const branding = true;
 export const rightsidebar = true;
