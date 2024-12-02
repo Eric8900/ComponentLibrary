@@ -25,7 +25,7 @@ export function Footer() {
               rel="noopener noreferrer"
             >
               <Image
-                src="/logo.svg"
+                src="/ecomponents.png"
                 alt="Rubix Studios Logo"
                 width={30}
                 height={30}
