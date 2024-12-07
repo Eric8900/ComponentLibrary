@@ -1,0 +1,183 @@
+---
+title: Scrolling Social Proof
+description: An infinite scrolling component for displaying logos and other components
+keywords: ["social proof", "components", "library", "tailwind", "nextjs", "shadcn"]
+---
+import SocialProofDemo from "@/components/demos/SocialProofDemo";
+
+<Tabs defaultValue="preview" className="pt-5 pb-1">
+  <TabsList className="">
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview" className="">
+  <div className="preview not-prose flex w-full justify-center p-2 sm:p-10 items-center">
+    <SocialProofDemo/>
+  </div>
+  </TabsContent>
+  <TabsContent value="code">
+```tsx
+import React from 'react';
+import { ScrollingSocialProof } from '@/components/ui/social-proof';
+import Image from 'next/image';
+
+function SocialProofDemo() {
+  const logos = [
+    { name: 'Google', src: 'https://pngimg.com/d/google_PNG19644.png' },
+    { name: 'Microsoft', src: 'https://cdn.freebiesupply.com/logos/large/2x/microsoft-centered-logo-png-transparent.png' },
+    { name: 'Apple', src: 'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo.png' },
+    { name: 'Amazon', src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png' },
+    { name: 'Meta', src: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Meta-Logo.png' },
+    { name: 'Netflix', src: 'https://cdn.prod.website-files.com/5ee732bebd9839b494ff27cd/5ee732bebd98393d75ff281d_580b57fcd9996e24bc43c529.png' },
+    { name: 'NVIDIA', src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/NVIDIA_logo.svg/1024px-NVIDIA_logo.svg.png' },
+    { name: 'OpenAI', src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/OpenAI_Logo.svg/2560px-OpenAI_Logo.svg.png' },
+  ];
+
+  return (
+    <div className="w-full py-12">
+      <div className="mx-auto max-w-7xl px-4">
+        <h2 className="text-center text-xl font-semibold bg-gradient-to-r text-green-100 from-sky-600 via-violet-500 to-indigo-600 text-transparent bg-clip-text mb-8">
+          TRUSTED BY LEADING COMPANIES
+        </h2>
+        <ScrollingSocialProof 
+          className="py-4"
+        >
+          {logos.map((logo, index) => (
+            <div 
+              key={index} 
+              className="flex items-center justify-center px-6"
+            >
+              <div className="rounded-lg p-2">
+                <Image
+                  src={logo.src}
+                  alt={`${logo.name} logo`}
+                  width={100}
+                  height={100}
+                  className="object-contain transition-all dark:brightness-0 dark:invert"
+                />
+              </div>
+            </div>
+          ))}
+        </ScrollingSocialProof>
+      </div>
+    </div>
+  );
+};
+
+export default SocialProofDemo;
+```
+  </TabsContent>
+</Tabs>
+
+## Installation
+
+<Step>
+<StepItem title="Install dependencies">
+
+  ```bash
+  npm install tailwind-merge clsx
+  ```
+
+</StepItem>
+<StepItem title="Add util file">
+  lib/utils.ts
+  ```ts
+  import { ClassValue, clsx } from "clsx";
+  import { twMerge } from "tailwind-merge";
+
+  export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+  }
+  ```
+
+</StepItem>
+<StepItem title={
+  <>Add the following code in the <span className="highlight-line">tailwind.config.js</span> file</>
+}>
+  ```ts {12-20}
+  import type { Config } from "tailwindcss";
+
+  export default {
+    darkMode: ["class"],
+    content: [
+      "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+      "./components/**/*.{js,ts,jsx,tsx,mdx}",
+      "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    ],
+    theme: {
+      extend: {
+        animation: {
+          socialproof: "socialproof var(--duration) linear infinite",
+        },
+        keyframes: {
+          socialproof: {
+            from: { transform: "translateX(0)" },
+            to: { transform: "translateX(calc(-100% - var(--gap)))" },
+          },
+        },
+        // other code
+      }
+    },
+    plugins: [require("tailwindcss-animate")],
+  } satisfies Config;
+  ```
+</StepItem>
+<StepItem title="Copy the source code">
+<div className="highlight-line w-fit">components/ui/social-proof.tsx</div>
+```tsx
+import React from 'react';
+import { cn } from "@/lib/utils";
+
+interface ScrollingSocialProofProps extends React.HTMLAttributes<HTMLDivElement> {
+  className?: string;
+  reverse?: boolean;
+  children?: React.ReactNode;
+  repeat?: number;
+}
+
+export function ScrollingSocialProof({
+  className,
+  reverse,
+  children,
+  repeat = 4,
+  ...props
+}: ScrollingSocialProofProps) {
+  return (
+    <div className="relative">
+      <div className="absolute left-0 top-0 h-full w-[10%] bg-gradient-to-r from-white via-white/80 dark:from-black dark:to-black/5 to-transparent z-10" />
+      <div className="absolute right-0 top-0 h-full w-[10%] bg-gradient-to-l from-white via-white/80 dark:from-black dark:to-black/5 to-transparent z-10" />
+      <div
+        {...props}
+        className={cn(
+          "group flex flex-row overflow-hidden p-2 [--duration:40s] [--gap:1rem] [gap:var(--gap)]",
+          className,
+        )}
+      >
+        {Array(repeat)
+          .fill(0)
+          .map((_, i) => (
+            <div
+              key={i}
+              className={cn("flex shrink-0 justify-around [gap:var(--gap)] animate-socialproof flex-row", {
+                "[animation-direction:reverse]": reverse,
+              })}
+            >
+              {children}
+            </div>
+          ))}
+      </div>
+    </div>
+  );
+}
+```
+</StepItem>
+</Step>
+
+## Props
+
+|Prop          |Type        |Description |Default Value |
+| :------------ | :--------- | :---------- |:----------|
+| <span className="highlight-line">className</span>   | <span className="highlight-line">string</span>    | Class names for the component | <span className="highlight-line">undefined</span> |
+| <span className="highlight-line">reverse</span>   | <span className="highlight-line">boolean</span>    | Reverse direction of scroll | <span className="highlight-line">undefined</span> |
+| <span className="highlight-line">children</span>   | <span className="highlight-line">ReactNode</span>    | The images or elements that will be scrolled with the component | <span className="highlight-line">undefined</span> |
+| <span className="highlight-line">repeat</span>   | <span className="highlight-line">number</span>    | Number of times to repeat the string of images or elements for more seamless scrolling  | <span className="highlight-line">4</span> |

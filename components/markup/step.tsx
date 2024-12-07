@@ -29,7 +29,7 @@ export function Step({ children }: PropsWithChildren<StepProps>) {
 }
 
 interface StepItemProps {
-  title?: string;
+  title?: ReactNode;
   children: ReactNode;
 }
 

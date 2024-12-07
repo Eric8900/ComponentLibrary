@@ -14,6 +14,14 @@ export const Documents: Paths[] = [
     spacer: true,
   },
   {
+    title: "Scrolling Social Proof",
+    href: "/scrolling-social-proof",
+    heading: "Components",
+  },
+  {
+    spacer: true,
+  },
+  {
     title: "Navigation",
     href: "/navigation",
     heading: "Components",
