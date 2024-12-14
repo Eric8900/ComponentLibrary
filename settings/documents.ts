@@ -28,7 +28,7 @@ export const Documents: Paths[] = [
   {
     title: "Navigation",
     href: "/navigation",
-    heading: "Components",
+    heading: "Other",
   },
   {
     title: "Structure",
@@ -47,12 +47,8 @@ export const Documents: Paths[] = [
     ],
   },
   {
-    spacer: true,
-  },
-  {
     title: "Markup",
     href: "/markup",
-    heading: "Components",
     items: [
       {
         title: "Cards",
