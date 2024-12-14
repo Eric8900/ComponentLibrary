@@ -1,0 +1,125 @@
+---
+title: Animated Gradient Button
+description: An animated button that  seamlessly changes from one gradient to another
+keywords: ["button", "gradient", "animation", "animated", "framer motion", "tailwind"]
+---
+import GradientButtonDemo from "@/components/demos/GradientButtonDemo";
+
+<Tabs defaultValue="preview" className="pt-5 pb-1">
+  <TabsList className="">
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview" className="">
+  <div className="preview not-prose flex w-full justify-center p-2 sm:p-10 items-center">
+    <GradientButtonDemo/>
+  </div>
+  </TabsContent>
+  <TabsContent value="code">
+```tsx
+'use-client';
+import React from 'react'
+import { GradientButton } from '@/components/ui/animated-gradient-button'
+
+function GradientButtonDemo() {
+  return (
+    <div className='flex'>
+      <GradientButton
+        initialGradient="bg-gradient-to-t from-red-400 to-violet-400"
+        hoverGradient="bg-gradient-to-r from-red-400 to-violet-600"
+        duration={1}
+      >
+        <span className="relative text-white font-semibold">
+          Hover
+        </span>
+      </GradientButton>
+    </div>
+  )
+}
+
+export default GradientButtonDemo
+```
+  </TabsContent>
+</Tabs>
+
+## Installation
+
+<Step>
+<StepItem title="Install dependencies">
+
+  ```bash
+  npm install tailwind-merge clsx
+  ```
+
+</StepItem>
+<StepItem title="Add util file">
+  lib/utils.ts
+  ```ts
+  import { ClassValue, clsx } from "clsx";
+  import { twMerge } from "tailwind-merge";
+
+  export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+  }
+  ```
+
+</StepItem>
+<StepItem title="Copy the source code">
+<div className="highlight-text w-fit">components/ui/animated-gradient-button.tsx</div>
+```tsx
+'use client';
+import { motion } from "framer-motion";
+import React from "react";
+
+type GradientButtonProps = {
+  children?: React.ReactNode;
+  initialGradient?: string
+  hoverGradient?: string
+  className?: string;
+  duration?: number;
+};
+
+export function GradientButton({
+  children,
+  initialGradient = "bg-gradient-to-r from-purple-500 to-blue-500",
+  hoverGradient = "bg-gradient-to-r from-purple-500 to-orange-500",
+  className = "",
+  duration = 0.3
+}: GradientButtonProps) {
+  return (
+    <motion.button
+      className={`relative px-8 py-4 rounded-lg overflow-hidden group ${className}`}
+      whileHover="hover"
+      initial="initial"
+    >
+      <div
+        className={`absolute inset-0 ${initialGradient}`}
+      />
+      <motion.div
+        className={`absolute inset-0 ${hoverGradient}`}
+        initial={{ scale: 1.5, opacity: 0 }}
+        variants={{
+          hover: { scale: 1, opacity: 1 },
+          initial: { scale: 1.5, opacity: 0 }
+        }}
+        transition={{ 
+          duration,
+          ease: "easeInOut"
+        }}
+      />
+      {children}
+    </motion.button>
+  );
+}
+```
+</StepItem>
+</Step>
+
+## Props
+
+|Prop          |Type        |Description |Default Value |
+| :------------ | :--------- | :---------- |:----------|
+| <span className="highlight-text">children</span>   | <span className="highlight-text">ReactNode</span>    | The element of text that will go on the button | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">initialGradient</span>   | <span className="highlight-text">string</span>    | The initial gradient or color that you want in any direction | <span className="highlight-text">"bg-gradient-to-r from-purple-500 to-blue-500"</span> |
+| <span className="highlight-text">hoverGradient</span>   | <span className="highlight-text">string</span>    | The hovered gradient or color that you want in any direction | <span className="highlight-text">"bg-gradient-to-r from-purple-500 to-orange-500"</span> |
+| <span className="highlight-text">duration</span>   | <span className="highlight-text">number</span>    | Duration of the animation in seconds  | <span className="highlight-text">0.3</span> |

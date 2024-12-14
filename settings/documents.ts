@@ -19,6 +19,10 @@ export const Documents: Paths[] = [
     heading: "Components",
   },
   {
+    title: "Animated Gradient Button",
+    href: "/animated-gradient-button",
+  },
+  {
     spacer: true,
   },
   {

@@ -15,7 +15,7 @@ export const companyname = "EComponents";
 export const companylink = "https://eric-components.vercel.app";
 
 export const branding = true;
-export const rightsidebar = true;
+export const rightsidebar = false;
 export const feedbackedit = false;
 export const tableofcontent = true;
 export const totopscroll = true;
