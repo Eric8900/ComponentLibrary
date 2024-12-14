@@ -25,8 +25,8 @@ export function Footer() {
               rel="noopener noreferrer"
             >
               <Image
-                src="/ecomponents.png"
-                alt="Rubix Studios Logo"
+                src="/essenceui.png"
+                alt="essenceUI"
                 width={30}
                 height={30}
               />

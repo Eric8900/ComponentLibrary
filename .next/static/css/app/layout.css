@@ -859,8 +859,8 @@ video {
 .w-3\/4 {
   width: 75%;
 }
-.w-32 {
-  width: 8rem;
+.w-36 {
+  width: 9rem;
 }
 .w-4 {
   width: 1rem;
@@ -895,12 +895,6 @@ video {
 }
 .w-full {
   width: 100%;
-}
-.w-48 {
-  width: 12rem;
-}
-.w-36 {
-  width: 9rem;
 }
 .min-w-\[230px\] {
   min-width: 230px;
@@ -1205,10 +1199,6 @@ video {
 .bg-destructive {
   background-color: hsl(var(--destructive));
 }
-.bg-gray-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
-}
 .bg-gray-800 {
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
@@ -1227,6 +1217,10 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(245 245 245 / var(--tw-bg-opacity));
 }
+.bg-neutral-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(64 64 64 / var(--tw-bg-opacity));
+}
 .bg-orange-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(255 237 213 / var(--tw-bg-opacity));
@@ -1235,7 +1229,8 @@ video {
   background-color: hsl(var(--popover));
 }
 .bg-primary {
-  background-color: hsl(var(--primary));
+  --tw-bg-opacity: 1;
+  background-color: rgb(14 165 233 / var(--tw-bg-opacity));
 }
 .bg-red-100 {
   --tw-bg-opacity: 1;
@@ -1254,10 +1249,6 @@ video {
 .bg-zinc-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(228 228 231 / var(--tw-bg-opacity));
-}
-.bg-neutral-700 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(64 64 64 / var(--tw-bg-opacity));
 }
 .bg-opacity-5 {
   --tw-bg-opacity: 0.05;
@@ -1620,7 +1611,8 @@ video {
   color: hsl(var(--popover-foreground));
 }
 .text-primary {
-  color: hsl(var(--primary));
+  --tw-text-opacity: 1;
+  color: rgb(14 165 233 / var(--tw-text-opacity));
 }
 .text-primary-foreground {
   color: hsl(var(--primary-foreground));
@@ -1683,10 +1675,6 @@ video {
 }
 .blur {
   --tw-blur: blur(8px);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-.brightness-200 {
-  --tw-brightness: brightness(2);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 .grayscale {
@@ -2728,7 +2716,7 @@ span.katex-html {
 }
 
 .hover\:bg-primary\/90:hover {
-  background-color: hsl(var(--primary) / 0.9);
+  background-color: rgb(14 165 233 / 0.9);
 }
 
 .hover\:bg-secondary\/80:hover {
@@ -2747,7 +2735,7 @@ span.katex-html {
   color: hsl(var(--muted-foreground));
 }
 
-.hover\:text-sky-500:hover {
+.hover\:text-primary:hover {
   --tw-text-opacity: 1;
   color: rgb(14 165 233 / var(--tw-text-opacity));
 }

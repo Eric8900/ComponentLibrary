@@ -37,7 +37,7 @@ export default function SubLink(props: Paths & { level: number; isSheet: boolean
   const { title, href, items, noLink, level, isSheet } = props;
 
   const Comp = (
-    <Anchor activeClassName="text-primary text-sm" className="hover:text-sky-500 text-muted-foreground hover:translate-x-1 transition-all duration-200 ease-in-out" href={href}>
+    <Anchor activeClassName="text-primary text-sm" className="hover:text-primary text-muted-foreground hover:translate-x-1 transition-all duration-200 ease-in-out" href={href}>
       {title}
     </Anchor>
   );
