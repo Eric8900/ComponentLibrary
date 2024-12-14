@@ -16,6 +16,7 @@ const FileTree = dynamic(() => import('@/components/markup/filetree'), {
 import { Folder, File } from '@/components/markup/filetree';
 import SocialProofDemo from "@/components/demos/SocialProofDemo";
 import GradientButtonDemo from "@/components/demos/GradientButtonDemo";
+import SponsorSectionDemo from "@/components/demos/SponsorSectionDemo";
 
 export const components = {
     a: RoutedLink as React.ComponentType<React.AnchorHTMLAttributes<HTMLAnchorElement>>,
@@ -34,5 +35,6 @@ export const components = {
     TabsList,
     TabsTrigger,
     SocialProofDemo,
-    GradientButtonDemo
+    GradientButtonDemo,
+    SponsorSectionDemo
 };

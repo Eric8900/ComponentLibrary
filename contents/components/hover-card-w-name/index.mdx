@@ -1,0 +1,197 @@
+---
+title: Hover Effect Cards
+description: Animated cards inspired by motion.dev's sponsor section that show text on hover for more detail, great for sponsors sections
+keywords: ["hover", "animated", "blur", "text", "framer motion", "tailwind"]
+---
+import SponsorSectionDemo from "@/components/demos/SponsorSectionDemo";
+
+<Tabs defaultValue="preview" className="pt-5 pb-1">
+  <TabsList className="">
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview" className="">
+  <div className="preview not-prose flex w-full justify-center p-2 sm:p-10 items-center">
+    <SponsorSectionDemo/>
+  </div>
+  </TabsContent>
+  <TabsContent value="code">
+```tsx
+import { SponserCard } from "@/components/ui/hover-name-card";
+
+export default function SponsorsSectionDemo() {
+    const sponsors = [
+        {
+            name: 'Framer',
+            src: 'https://framerusercontent.com/images/t9dDWtLxIvK0eBUuDZFbCWW0Yc.svg',
+            href: 'https://example.com'
+        },
+        { 
+            name: 'Tailwind', 
+            src: 'https://framerusercontent.com/images/2MLM1UlOYvTkdL65Fo8j01403qs.svg',
+            href: 'https://example.com'
+        },
+        { 
+            name: 'Company', 
+            src: 'https://framerusercontent.com/images/A8mLJfjzX7KBDtbPoJIUEFNKX6s.png',
+            href: 'https://example.com'
+        },
+        { 
+            name: 'Linear', 
+            src: 'https://framerusercontent.com/images/N6laZOiPdKqh5XhnoCK9bVjyOc.svg',
+            href: 'https://example.com'
+        },
+        { 
+            name: 'Luma', 
+            src: 'https://framerusercontent.com/images/fDnRv3RUCf2HQQBbJwPBT1UDE.png',
+            href: 'https://example.com'
+        },
+        { 
+            name: 'Liveblocks', 
+            src: 'https://framerusercontent.com/images/Cv3srziizWoof4Y0gnGHGmwmlRA.svg',
+            href: 'https://example.com'
+        },
+    ];
+    return (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+            {sponsors.map((sponsor) => (
+                <SponserCard
+                    key={sponsor.name}
+                    src={sponsor.src}
+                    name={sponsor.name}
+                    href={sponsor.href}
+                    className="bg-neutral-700"
+                />
+            ))}
+        </div>
+    );
+}
+```
+  </TabsContent>
+</Tabs>
+
+## Installation
+
+<Step>
+<StepItem title="Install dependencies">
+
+  ```bash
+  npm install framer-motion tailwind-merge clsx
+  ```
+
+</StepItem>
+<StepItem title="Add util file">
+  lib/utils.ts
+  ```ts
+  import { ClassValue, clsx } from "clsx";
+  import { twMerge } from "tailwind-merge";
+
+  export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+  }
+  ```
+
+</StepItem>
+<StepItem title="Copy the source code">
+<div className="highlight-text w-fit">components/ui/hover-name-card.tsx</div>
+```tsx
+'use client';
+import React from 'react';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+
+interface SponsorCardProps {
+    src: string;
+    name: string;
+    href: string;
+    className?: string;
+}
+
+export function SponserCard({
+    src,
+    name,
+    href,
+    className,
+}: SponsorCardProps) {
+    return (
+        <motion.a
+            className={`relative w-72 h-48 rounded-xl overflow-hidden ${className}`}
+            whileHover="hover"
+            initial="initial"
+            animate="initial"
+            href={href}
+            target="_blank" 
+            rel="noopener noreferrer"
+        >
+            <motion.div
+                className="absolute inset-0 flex items-center justify-center"
+                variants={{
+                    initial: {
+                        scale: 1,
+                        filter: "blur(0px)",
+                        opacity: 1,
+                        transition: {
+                            duration: 0.9,
+                            type: "spring", 
+                            bounce: 0.25
+                        }
+                    },
+                    hover: {
+                        scale: 0.7,
+                        filter: "blur(5px)",
+                        opacity: 0.6,
+                        transition: {
+                            duration: 0.9,
+                            type: "spring", 
+                            bounce: 0.25
+                        }
+                    }
+                }}
+            >
+                <Image
+                    src={src}
+                    alt={`${name} logo`}
+                    width={100}
+                    height={100}
+                    className="w-36 h-auto grayscale"
+                />
+            </motion.div>
+            <motion.div
+                className="absolute inset-0 flex items-center justify-center text-white"
+                variants={{
+                    initial: {
+                        opacity: 0,
+                        scale: 1.5,
+                        transition: {
+                            opacity: { duration: 0.2, ease: "easeOut" },
+                            scale: { duration: 0.9, type: "spring", bounce: 0.25 }
+                        }
+                    },
+                    hover: {
+                        opacity: 1,
+                        scale: 1,
+                        transition: {
+                            duration: 0.9,
+                            type: "spring", 
+                            bounce: 0.25
+                        }
+                    }
+                }}
+            >
+                <span className="text-xl font-bold">{name}</span>
+            </motion.div>
+        </motion.a>
+    );
+};
+```
+</StepItem>
+</Step>
+
+## Props
+
+|Prop          |Type        |Description |Default Value |
+| :------------ | :--------- | :---------- |:----------|
+| <span className="highlight-text">src</span>   | <span className="highlight-text">string</span>    | Source link or path of the image for each card | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">name</span>   | <span className="highlight-text">string</span>    | Name that specifies the image | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">href</span>   | <span className="highlight-text">string</span>    | Link to wherever you want when clicking the card | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">className</span>   | <span className="highlight-text">string</span>    | Class names for the component | <span className="highlight-text">undefined</span> |

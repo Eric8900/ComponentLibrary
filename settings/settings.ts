@@ -5,7 +5,7 @@ export const gtm = "GTM-XXXXXXX";
 export const gtmconnected = true;
 
 export const sitename = "EComponents";
-export const description = "This comprehensive component library.";
+export const description = "React, NextJS, Tailwind, Shadcn component library.";
 export const keywords = ["Next.js", "documentation", "open source", "SEO"];
 export const urlimage = "/images/og-image.png";
 export const imagealt = "Component Library";
