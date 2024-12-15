@@ -18,6 +18,7 @@ import SocialProofDemo from "@/components/demos/SocialProofDemo";
 import GradientButtonDemo from "@/components/demos/GradientButtonDemo";
 import SponsorSectionDemo from "@/components/demos/SponsorSectionDemo";
 import StaggeredHoverDemo from "@/components/demos/StaggeredHoverDemo";
+import AppleVisionProDemo from "@/components/demos/AppleVisionProDemo";
 
 export const components = {
     a: RoutedLink as React.ComponentType<React.AnchorHTMLAttributes<HTMLAnchorElement>>,
@@ -38,5 +39,6 @@ export const components = {
     SocialProofDemo,
     GradientButtonDemo,
     SponsorSectionDemo,
-    StaggeredHoverDemo
+    StaggeredHoverDemo,
+    AppleVisionProDemo
 };

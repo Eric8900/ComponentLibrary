@@ -1,0 +1,232 @@
+---
+title: Apple Vision Scroll
+description: Scroll animation for Apple Vision Pro's features section
+keywords: ["apple", "vision", "scroll", "animation", "framer motion", "tailwind"]
+---
+import AppleVisionProDemo from "@/components/demos/AppleVisionProDemo";
+
+<Tabs defaultValue="preview" className="pt-5 pb-1">
+  <TabsList className="">
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview" className="">
+  <div className="preview not-prose flex w-full justify-center items-center">
+    <AppleVisionProDemo/>
+  </div>
+  </TabsContent>
+  <TabsContent value="code">
+```tsx
+import React from 'react'
+import { MediaHero } from '@/components/ui/media-hero'
+
+function AppleVisionProDemo() {
+    return (
+        <div>
+            <MediaHero
+                mediaType="video"
+                src="https://www.apple.com/105/media/us/apple-vision-pro/2024/6e1432b2-fe09-4113-a1af-f20987bcfeee/anim/experience-entertainment-a/large.mp4"
+            >
+                <span className="text-2xl font-bold mb-4">Entertainment</span>
+                <h1 className="md:text-7xl text-4xl font-extrabold mb-2 text-center">The ultimate theater.<br />Wherever you are.</h1>
+            </MediaHero>
+            <h1 className='flex items-center justify-center text-center font-extrabold text-8xl h-screen'>This is cool.</h1>
+            <MediaHero
+                mediaType="video"
+                src="https://www.apple.com/105/media/us/apple-vision-pro/2024/6e1432b2-fe09-4113-a1af-f20987bcfeee/anim/experience-productivity-a/large.mp4"
+            >
+                <span className="text-2xl font-bold mb-4">Productivity</span>
+                <h1 className="md:text-7xl text-4xl font-extrabold mb-2 text-center">A workspace with<br />infinite space.</h1>
+            </MediaHero>
+            <h1 className='flex items-center justify-center text-center font-extrabold text-8xl h-screen'>Your own text.</h1>
+            <MediaHero
+                mediaType="video"
+                src="https://www.apple.com/105/media/us/apple-vision-pro/2024/6e1432b2-fe09-4113-a1af-f20987bcfeee/anim/experience-photos-videos/large.mp4"
+            >
+                <span className="text-2xl font-bold mb-4">Photos and Videos</span>
+                <h1 className="md:text-7xl text-4xl font-extrabold mb-2 text-center">Be in the moment.<br />All over again.</h1>
+            </MediaHero>
+            <h1 className='flex items-center justify-center text-center font-extrabold text-5xl md:text-8xl h-screen'>Whatever you want.</h1>
+        </div>
+    )
+}
+
+export default AppleVisionProDemo
+```
+  </TabsContent>
+</Tabs>
+
+## Installation
+
+<Step>
+<StepItem title="Install dependencies">
+
+  ```bash
+  npm install framer-motion tailwind-merge clsx
+  ```
+
+</StepItem>
+<StepItem title="Add util file">
+  lib/utils.ts
+  ```ts
+  import { ClassValue, clsx } from "clsx";
+  import { twMerge } from "tailwind-merge";
+
+  export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+  }
+  ```
+
+</StepItem>
+<StepItem title="Copy the source code">
+<div className="highlight-text w-fit">components/ui/media-hero.tsx</div>
+```tsx
+'use client';
+import React, { useState, useRef } from 'react';
+import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
+
+interface MediaHeroProps {
+  mediaType: string;
+  src: string;
+  children: React.ReactNode;
+  height?: string;
+}
+
+export function MediaHero ({
+  mediaType = 'image',
+  src,
+  children,
+  height = '200vh'
+}: MediaHeroProps) {
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const targetRef = useRef<HTMLDivElement | null>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["end end", "end start"],
+  });
+
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.90]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+
+  const { scrollYProgress: scrollYProgressB } = useScroll({
+    target: targetRef,
+    offset: ["start end", "end start"],
+  });
+  const brightness = useTransform(scrollYProgressB, [0, 1], [0.3, 1.3]);
+  
+  const { scrollYProgress: scrollYProgress1 } = useScroll({
+    target: targetRef,
+    offset: ["start center", "end start"],
+  });
+
+  const textY = useTransform(scrollYProgress1, 
+    [0, 0.2, 1], 
+    [200, 0, -2000]
+  );
+  const textOpacity = useTransform(scrollYProgress1, 
+    [0, 0.6, 0.7], 
+    [1, 1, 0]
+  );
+
+  const togglePlay = () => {
+    if (mediaType === 'video' && videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  return (
+    <div className="relative" style={{ height }} ref={targetRef}>
+      <motion.div
+        style={{
+          scale,
+          height: "100vh",
+        }}
+        className="sticky top-0 w-full z-0"
+      >
+        <motion.div
+          style={{
+            filter: useTransform(brightness, (value) => `brightness(${value})`),
+            height: "100%",
+            width: "100%"
+          }}
+        >
+          {mediaType === 'video' ? (
+            <video
+              ref={videoRef}
+              className="h-full w-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              src={src}
+            />
+          ) : (
+            <Image
+              className="h-full w-full object-cover"
+              width={1920}
+              height={1080}
+              src={src}
+              alt="Hero background"
+              priority
+            />
+          )}
+        </motion.div>
+
+        <motion.div
+          className="absolute inset-0"
+          style={{ opacity }}
+        />
+
+        {mediaType === 'video' && (
+          <div className="absolute top-0 right-0 p-4 z-50">
+            <button
+              onClick={togglePlay}
+              className="rounded-full bg-black bg-opacity-40 p-3 hover:bg-opacity-60 transition-all cursor-pointer"
+              aria-label={isPlaying ? 'Pause' : 'Play'}
+            >
+              {isPlaying ? (
+                <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              )}
+            </button>
+          </div>
+        )}
+
+        <motion.div
+          style={{
+            y: textY,
+            opacity: textOpacity,
+          }}
+          className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center text-white"
+        >
+          {children}
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+};
+```
+</StepItem>
+</Step>
+
+## Props
+
+|Prop          |Type        |Description |Default Value |
+| :------------ | :--------- | :---------- |:----------|
+| <span className="highlight-text">mediaType</span>   | <span className="highlight-text">string</span>    | "Image" or "video" for the media | <span className="highlight-text">"image"</span> |
+| <span className="highlight-text">src</span>   | <span className="highlight-text">string</span>    | Path or link to the media | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">children</span>   | <span className="highlight-text">ReactNode</span>    | Any text or components you want on top of the media | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">height</span>   | <span className="highlight-text">string</span>    | Total height to scroll for the media  | <span className="highlight-text">"200vh"</span> |
