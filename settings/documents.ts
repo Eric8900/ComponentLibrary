@@ -14,9 +14,13 @@ export const Documents: Paths[] = [
     spacer: true,
   },
   {
+    title: "Staggered Flipping Links",
+    href: "/staggered-hover-flip",
+    heading: "Components",
+  },
+  {
     title: "Hover Effect",
     href: "/hover-card-w-name",
-    heading: "Components",
   },
   {
     title: "Animated Gradient Button",

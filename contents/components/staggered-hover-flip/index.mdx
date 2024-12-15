@@ -1,0 +1,171 @@
+---
+title: Staggered Flipping Link
+description: A fun animated link or element that flips the letters up on hover
+keywords: ["button", "link", "animation", "staggered", "hover", "framer motion", "tailwind"]
+---
+import StaggeredHoverDemo from "@/components/demos/StaggeredHoverDemo";
+
+<Tabs defaultValue="preview" className="pt-5 pb-1">
+  <TabsList className="">
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview" className="">
+  <div className="preview not-prose flex w-full justify-center p-2 sm:p-10 items-center">
+    <StaggeredHoverDemo/>
+  </div>
+  </TabsContent>
+  <TabsContent value="code">
+```tsx
+import React from 'react'
+import { StaggeredFlip } from '@/components/ui/staggered-hover'
+
+function StaggeredHoverDemo() {
+    return (
+        <div>
+            <section className="grid place-content-center gap-2 px-8 py-24">
+                <StaggeredFlip href="#">
+                    <span className="text-red-500">H</span>
+                    <span className="text-blue-500">o</span>
+                    <span className="text-green-500">v</span>
+                    <span className="text-yellow-500">e</span>
+                    <span className="text-purple-500">r</span>
+                </StaggeredFlip>
+            </section>
+        </div>
+    )
+}
+
+export default StaggeredHoverDemo
+```
+  </TabsContent>
+</Tabs>
+
+## Installation
+
+<Step>
+<StepItem title="Install dependencies">
+
+  ```bash
+  npm install framer-motion tailwind-merge clsx
+  ```
+
+</StepItem>
+<StepItem title="Add util file">
+  lib/utils.ts
+  ```ts
+  import { ClassValue, clsx } from "clsx";
+  import { twMerge } from "tailwind-merge";
+
+  export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+  }
+  ```
+
+</StepItem>
+<StepItem title="Copy the source code">
+<div className="highlight-text w-fit">components/ui/staggered-hover.tsx</div>
+```tsx
+'use client';
+import { motion } from 'framer-motion';
+import React, { Children, isValidElement, ReactNode, cloneElement } from 'react';
+
+interface StaggeredFlipProps {
+  children: ReactNode;
+  href?: string;
+  duration?: number;
+  stagger?: number;
+}
+
+export function StaggeredFlip ({
+  children,
+  href,
+  duration = 0.2,
+  stagger = 0.03,
+}: StaggeredFlipProps) {
+  const childrenArray = Children.toArray(children).map((child, index) => {
+    if (typeof child === 'string') {
+      return child.split('').map((char, charIndex) => (
+        <span key={`${index}-${charIndex}`}>{char}</span>
+      ));
+    }
+    if (isValidElement(child)) {
+      return cloneElement(child, { key: index });
+    }
+    return child;
+  }).flat();
+
+  const WrapperComponent = href ? motion.a : motion.div;
+  const wrapperProps = href ? { href } : {};
+
+  return (
+    <WrapperComponent
+      initial="initial"
+      whileHover="hovered"
+      {...wrapperProps}
+      className={`relative block overflow-hidden whitespace-nowrap text-4xl font-black uppercase sm:text-7xl md:text-8xl lg:text-9xl`}
+      style={{
+        lineHeight: 0.75,
+      }}
+    >
+      <div>
+        {childrenArray.map((child, i) => (
+          <motion.span
+            variants={{
+              initial: {
+                y: 0,
+              },
+              hovered: {
+                y: "-100%",
+              },
+            }}
+            transition={{
+              duration,
+              ease: "easeInOut",
+              delay: stagger * i,
+            }}
+            className="inline-block"
+            key={`top-${i}`}
+          >
+            {child}
+          </motion.span>
+        ))}
+      </div>
+      <div className="absolute inset-0">
+        {childrenArray.map((child, i) => (
+          <motion.span
+            variants={{
+              initial: {
+                y: "100%",
+              },
+              hovered: {
+                y: 0,
+              },
+            }}
+            transition={{
+              duration,
+              ease: "easeInOut",
+              delay: stagger * i,
+            }}
+            className="inline-block"
+            key={`bottom-${i}`}
+          >
+            {child}
+          </motion.span>
+        ))}
+      </div>
+    </WrapperComponent>
+  );
+};
+```
+</StepItem>
+</Step>
+
+## Props
+
+|Prop          |Type        |Description |Default Value |
+| :------------ | :--------- | :---------- |:----------|
+| <span className="highlight-text">children</span>   | <span className="highlight-text">ReactNode</span>    | The content to be animated - can be string or React nodes | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">href</span>   | <span className="highlight-text">string</span>    | The URL that the component links to | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">duration</span>   | <span className="highlight-text">number</span>    | Duration of the flip animation in seconds  | <span className="highlight-text">0.2</span> |
+| <span className="highlight-text">stagger</span>   | <span className="highlight-text">number</span>    | Delay between each character's animation in seconds | <span className="highlight-text">0.03</span> |

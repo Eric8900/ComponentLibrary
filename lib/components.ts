@@ -17,6 +17,7 @@ import { Folder, File } from '@/components/markup/filetree';
 import SocialProofDemo from "@/components/demos/SocialProofDemo";
 import GradientButtonDemo from "@/components/demos/GradientButtonDemo";
 import SponsorSectionDemo from "@/components/demos/SponsorSectionDemo";
+import StaggeredHoverDemo from "@/components/demos/StaggeredHoverDemo";
 
 export const components = {
     a: RoutedLink as React.ComponentType<React.AnchorHTMLAttributes<HTMLAnchorElement>>,
@@ -36,5 +37,6 @@ export const components = {
     TabsTrigger,
     SocialProofDemo,
     GradientButtonDemo,
-    SponsorSectionDemo
+    SponsorSectionDemo,
+    StaggeredHoverDemo
 };

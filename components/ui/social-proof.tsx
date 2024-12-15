@@ -17,8 +17,8 @@ export function ScrollingSocialProof({
 }: ScrollingSocialProofProps) {
   return (
     <div className="relative">
-      <div className="absolute left-0 top-0 h-full w-[10%] bg-gradient-to-r from-white via-white/80 dark:from-black dark:to-black/5 to-transparent z-10" />
-      <div className="absolute right-0 top-0 h-full w-[10%] bg-gradient-to-l from-white via-white/80 dark:from-black dark:to-black/5 to-transparent z-10" />
+      <div className="absolute left-0 top-0 h-full w-[10%] bg-gradient-to-r via-background/80 from-background dark:to-background/5 to-transparent z-10" />
+      <div className="absolute right-0 top-0 h-full w-[10%] bg-gradient-to-l via-background/80 from-background dark:to-background/5 to-transparent z-10" />
       <div
         {...props}
         className={cn(
