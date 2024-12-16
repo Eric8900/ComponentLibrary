@@ -14,9 +14,13 @@ export const Documents: Paths[] = [
     spacer: true,
   },
   {
+    title: "Curved Carousel",
+    href: "/curved-carousel",
+    heading: "Components",
+  },
+  {
     title: "Floating Footer",
     href: "/floating-footer",
-    heading: "Components",
   },
   {
     title: "Apple Vision Scroll",

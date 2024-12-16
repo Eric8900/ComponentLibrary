@@ -20,6 +20,7 @@ import SponsorSectionDemo from "@/components/demos/SponsorSectionDemo";
 import StaggeredHoverDemo from "@/components/demos/StaggeredHoverDemo";
 import AppleVisionProDemo from "@/components/demos/AppleVisionProDemo";
 import FloatingFooterDemo from "@/components/demos/FloatingFooterDemo";
+import CurvedCarouselDemo from "@/components/demos/CurvedCarouselDemo";
 
 export const components = {
     a: RoutedLink as React.ComponentType<React.AnchorHTMLAttributes<HTMLAnchorElement>>,
@@ -42,5 +43,6 @@ export const components = {
     SponsorSectionDemo,
     StaggeredHoverDemo,
     AppleVisionProDemo,
-    FloatingFooterDemo
+    FloatingFooterDemo,
+    CurvedCarouselDemo
 };
