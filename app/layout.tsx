@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   description: Settings.description,
   keywords: Settings.keywords,
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png'
+  },
   openGraph: {
     type: Settings.openGraph.type,
     url: baseUrl,
