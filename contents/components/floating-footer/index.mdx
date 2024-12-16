@@ -1,0 +1,170 @@
+---
+title: Floating Footer
+description: A footer that detaches from the side and floats as you scroll
+keywords: ["footer", "floating", "animation", "animated", "framer motion", "tailwind"]
+---
+
+<Tabs defaultValue="preview" className="pt-5 pb-1">
+  <TabsList className="">
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview" className="">
+  <div className="preview not-prose flex flex-col w-full justify-center p-2 sm:p-10 items-center">
+    <FloatingFooterDemo/>
+  </div>
+  </TabsContent>
+  <TabsContent value="code">
+```tsx
+import React from 'react'
+import { Footer } from '@/components/ui/floating-footer'
+import Image from 'next/image'
+
+function FloatingFooterDemo() {
+    return (
+        <div className='bg-slate-100 dark:bg-gray-800 w-full'>
+            <div className='h-[120vh]'>
+                <h1 className='text-7xl text-center font-extrabold mt-[40%]'>Scroll Down</h1>
+            </div>
+            <Footer className='h-[70vh]'>
+                <div className="flex flex-col sm:flex-row sm:justify-between items-start p-8 text-white/80">
+                    <div className='mb-10 sm:mb-0'>
+                        <Image
+                            src="/essenceui.png"
+                            alt="essenceUI"
+                            width={30}
+                            height={30}
+                        />
+                    </div>
+                    <div className="flex-grow" />
+                    <div className="flex gap-16">
+                        <div className="flex flex-col gap-4">
+                            <a href="#" className="hover:text-white transition-colors">home</a>
+                            <a href="#" className="hover:text-white transition-colors">product</a>
+                        </div>
+                        <div className="flex flex-col gap-4">
+                            <a href="#" className="hover:text-white transition-colors">company</a>
+                            <a href="#" className="hover:text-white transition-colors">support</a>
+                            <a href="#" className="hover:text-white transition-colors">terms of use</a>
+                            <a href="#" className="hover:text-white transition-colors">privacy policy</a>
+                            <a href="#" className="hover:text-white transition-colors">law</a>
+                        </div>
+                    </div>
+                </div>
+                <div className="absolute bottom-8 left-8 right-8 flex flex-col sm:flex-row sm:justify-between items-center text-white/60">
+                    <div className="flex gap-2 mb-4 sm:mb-0">
+                        <a href="#" className="px-4 py-1.5 rounded-full border border-white/20 hover:bg-white/10 transition-colors">
+                            x
+                        </a>
+                        <a href="#" className="px-4 py-1.5 rounded-full border border-white/20 hover:bg-white/10 transition-colors">
+                            yt
+                        </a>
+                        <a href="#" className="px-4 py-1.5 rounded-full border border-white/20 hover:bg-white/10 transition-colors">
+                            ig
+                        </a>
+                    </div>
+                    <div>
+                        essenceui © 2024
+                    </div>
+                </div>
+            </Footer>
+        </div>
+    )
+}
+
+export default FloatingFooterDemo
+```
+  </TabsContent>
+</Tabs>
+
+## Installation
+
+<Step>
+<StepItem title="Install dependencies">
+
+  ```bash
+  npm install framer-motion tailwind-merge clsx
+  ```
+
+</StepItem>
+<StepItem title="Add util file">
+  lib/utils.ts
+  ```ts
+  import { ClassValue, clsx } from "clsx";
+  import { twMerge } from "tailwind-merge";
+
+  export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+  }
+  ```
+
+</StepItem>
+<StepItem title="Copy the source code">
+<div className="highlight-text w-fit">components/ui/floating-footer.tsx</div>
+```tsx
+'use client';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+
+interface FooterProps {
+    children?: React.ReactNode;
+    height?: string;
+    className?: string;
+}
+
+export function Footer({
+    children,
+    height = "100vh",
+    className
+}: FooterProps) {
+    const footerRef = useRef(null)
+    const { scrollYProgress } = useScroll({
+        target: footerRef,
+        offset: ["start center", "end end"]
+    });
+
+    const borderRadius = useTransform(
+        scrollYProgress,
+        [0, 0.2, 0.8, 1],
+        [0, 24, 24, 24]
+    );
+
+    const marginX = useTransform(
+        scrollYProgress,
+        [0, 0.1, 0.2, 0.3, 0.7, 0.8, 0.9, 1],
+        ["0%", "1%", "2%", "4%", "6%", "7%", "7.5%", "8%"]
+    );
+
+    return (
+        <div 
+        ref={footerRef}
+        className={`bottom-0 w-full relative h-[${height}]`}>
+            <motion.footer
+                style={{
+                    borderRadius,
+                    marginLeft: marginX,
+                    marginRight: marginX,
+                    marginBottom: marginX
+                }}
+                className={`bottom-0 left-0 right-0 sticky bg-neutral-800 transition-all p-8 ${className}`}
+            >
+                {children}
+            </motion.footer>
+        </div>
+    );
+};
+
+export default Footer;
+```
+</StepItem>
+</Step>
+
+## Props
+
+|Prop          |Type        |Description |Default Value |
+| :------------ | :--------- | :---------- |:----------|
+| <span className="highlight-text">children</span>   | <span className="highlight-text">ReactNode</span>    | The actual content of the footer that you want | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">height</span>   | <span className="highlight-text">string</span>    | The total scrolling height of the footer | <span className="highlight-text">"100vh"</span> |
+| <span className="highlight-text">className</span>   | <span className="highlight-text">string</span>    | Class names for the footer | <span className="highlight-text">undefined</span> |
+
+Inspired by <a href="https://kyu-core.com/en/" target="_blank" rel="noopener noreferrer">kyu</a>

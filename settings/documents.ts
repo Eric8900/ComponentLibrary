@@ -14,9 +14,13 @@ export const Documents: Paths[] = [
     spacer: true,
   },
   {
+    title: "Floating Footer",
+    href: "/floating-footer",
+    heading: "Components",
+  },
+  {
     title: "Apple Vision Scroll",
     href: "/apple-vision-scroll",
-    heading: "Components",
   },
   {
     title: "Staggered Flipping Links",
