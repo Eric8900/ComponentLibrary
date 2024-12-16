@@ -7,6 +7,7 @@ import { GeistMono } from "geist/font/mono";
 import { Footer } from "@/components/navigation/footer";
 import { Settings } from "@/lib/meta";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react"
 
 const baseUrl = Settings.metadataBase;
 
@@ -51,6 +52,7 @@ export default function RootLayout({
       { Settings.gtmconnected && (
         <GoogleTagManager gtmId={Settings.gtm} />
       )}
+      <Analytics/>
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} font-regular`}
         suppressHydrationWarning
