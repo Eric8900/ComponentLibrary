@@ -14,9 +14,13 @@ export const Documents: Paths[] = [
     spacer: true,
   },
   {
+    title: "Highlight Text",
+    href: "/highlight-text",
+    heading: "Components",
+  },
+  {
     title: "Curved Carousel",
     href: "/curved-carousel",
-    heading: "Components",
   },
   {
     title: "Floating Footer",

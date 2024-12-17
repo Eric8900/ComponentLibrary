@@ -1,0 +1,124 @@
+---
+title: Highlight Text
+description: A component that animates highlighting text
+keywords: ["highlight", "text", "animation", "animated", "framer motion", "tailwind"]
+---
+
+<Tabs defaultValue="preview" className="pt-5 pb-1">
+  <TabsList className="">
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview" className="">
+  <div className="preview not-prose flex w-full justify-center p-2 sm:p-10 items-center">
+    <HighlightTextDemo/>
+  </div>
+  </TabsContent>
+  <TabsContent value="code">
+```tsx
+import HighlightText from "@/components/ui/highlight-text";
+
+function HighlightTextDemo() {
+    return (
+      <div className='text-center text-5xl font-bold max-w-3xl mx-auto leading-tight'>
+        For all the moments you need to <HighlightText className='bg-gradient-to-r from-sky-300 to-blue-300 dark:from-sky-600 dark:to-blue-600'>highlight text</HighlightText>
+      </div>
+    );
+  }
+  
+export default HighlightTextDemo;
+```
+  </TabsContent>
+</Tabs>
+
+## Installation
+
+<Step>
+<StepItem title="Install dependencies">
+
+  ```bash
+  npm install framer-motion tailwind-merge clsx
+  ```
+
+</StepItem>
+<StepItem title="Add util file">
+  lib/utils.ts
+  ```ts
+  import { ClassValue, clsx } from "clsx";
+  import { twMerge } from "tailwind-merge";
+
+  export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+  }
+  ```
+
+</StepItem>
+<StepItem title="Copy the source code">
+<div className="highlight-text w-fit">components/ui/highlight-text.tsx</div>
+```tsx
+'use client';
+import React, { ReactNode } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { cn } from "@/lib/utils";
+
+interface HighlightTextProps {
+  children: ReactNode;
+  duration?: number;
+  delay?: number;
+  className?: string;
+}
+
+const HighlightText = ({
+  children,
+  duration = 2,
+  delay = 0.5,
+  className = 'bg-yellow-300',
+}: HighlightTextProps) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  return (
+    <motion.span
+      ref={ref}
+      initial={{
+        backgroundSize: "0% 100%",
+      }}
+      animate={isInView ? {
+        backgroundSize: "100% 100%",
+      } : {
+        backgroundSize: "0% 100%",
+      }}
+      transition={{
+        duration,
+        ease: "linear",
+        delay,
+      }}
+      className={cn(
+        "relative pb-1 px-1 inline-block rounded-lg whitespace-nowrap",
+        className
+      )}
+      style={{
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "left center",
+      }}
+    >
+      {children}
+    </motion.span>
+  );
+};
+
+export default HighlightText;
+```
+</StepItem>
+</Step>
+
+## Props
+
+|Prop          |Type        |Description |Default Value |
+| :------------ | :--------- | :---------- |:----------|
+| <span className="highlight-text">children</span>   | <span className="highlight-text">ReactNode</span>    | The text to be highlighted | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">duration</span>   | <span className="highlight-text">number</span>    | Duration of the highlight animation in seconds  | <span className="highlight-text">2</span> |
+| <span className="highlight-text">delay</span>   | <span className="highlight-text">number</span>    | Delay before the highlight animation begins | <span className="highlight-text">0.5</span> |
+| <span className="highlight-text">className</span>   | <span className="highlight-text">string</span>    | Class names for the highlight, add color here | <span className="highlight-text">"bg-yellow-300"</span> |
+
+My take on <a href="https://ui.aceternity.com/components/hero-highlight" target="_blank" rel="noopener noreferrer">Aceternity's Hero Highlight</a>
