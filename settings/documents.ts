@@ -14,9 +14,13 @@ export const Documents: Paths[] = [
     spacer: true,
   },
   {
+    title: "Outline Text",
+    href: "/outline-text",
+    heading: "Components",
+  },
+  {
     title: "Highlight Text",
     href: "/highlight-text",
-    heading: "Components",
   },
   {
     title: "Curved Carousel",
