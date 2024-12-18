@@ -16,20 +16,13 @@ export function OutlineText({
     top = 15
 }: OutlineTextProps) {
     return (
-        <span className="relative inline-block">
+        <span className="relative">
             {children}
             <svg 
-                className="absolute"
-                style={{ 
-                    left: '-1.25rem',
-                    right: '-1.25rem',
-                    top: `-${top}px`,
-                    bottom: '0',
-                    transform: 'translateY(4px)'
-                }}
+                className="absolute -left-5 -right-5 bottom-0 translate-y-1"
+                style={{ top: `-${top}px` }}
                 viewBox="0 0 3200 1471" 
                 fill="none" 
-                preserveAspectRatio="xMidYMid meet"
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <defs>
