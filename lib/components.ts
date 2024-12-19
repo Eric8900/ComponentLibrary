@@ -48,5 +48,5 @@ export const components = {
     FloatingFooterDemo,
     CurvedCarouselDemo,
     HighlightTextDemo,
-    OutlineTextDemo
+    OutlineTextDemo,
 };

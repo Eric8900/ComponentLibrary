@@ -14,9 +14,13 @@ export const Documents: Paths[] = [
     spacer: true,
   },
   {
+    title: "UT Hero Section",
+    href: "/ut-hero",
+    heading: "Components",
+  },
+  {
     title: "Outline Text",
     href: "/outline-text",
-    heading: "Components",
   },
   {
     title: "Highlight Text",

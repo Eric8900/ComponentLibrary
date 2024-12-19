@@ -1,0 +1,211 @@
+---
+title: UT Hero Section
+description: The UT Hero section with sticky text and a parallax background
+keywords: ["hero", "parallax", "sticky", "animated", "framer motion", "tailwind"]
+---
+
+<Tabs defaultValue="preview" className="pt-5 pb-1">
+  <TabsList className="">
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview" className="">
+  <div className="preview not-prose">
+    <iframe 
+    src="https://e-components-testing.vercel.app/ut-hero-demo"
+    className="w-full h-screen border-0"
+    title="Website title"
+    sandbox="allow-scripts allow-same-origin"
+    referrerpolicy="no-referrer"
+    ></iframe>
+  </div>
+  </TabsContent>
+  <TabsContent value="code">
+```tsx
+import React from 'react'
+import { StickyHero } from './ui/sticky-hero'
+
+function UTHeroDemo() {
+    return (
+        <div>
+            <StickyHero
+                heroText={
+                    <>
+                    WHAT<br/>STARTS<br/>HERE<br/>CHANGES<br/>THE WORLD
+                    </>
+                }
+                srcHero={'https://www.utexas.edu/sites/default/files/hero_video/homepage-video-20240119.mp4'}
+                mediaType={'video'}
+                srcBelow={'https://www.utexas.edu/sites/default/files/sotu_1500x675.jpg'}>
+                <div className='flex justify-center items-center w-full h-full bg-gradient-to-t from-[#fd7e14] to-[#fd7e14]/70'>
+                    <div className='h-[50vh] max-w-6xl mb-[30vh] mx-[2%] grid md:grid-cols-2 grid-cols-1 gap-6 bottom-0 w-full'>
+                        <div className='grid grid-rows-2 gap-6'>
+                            <div className='text-white w-full bg-[#bf5700] hover:bg-[#9d4700] transition-all duration-300 cursor-pointer font-bold text-4xl flex justify-center items-center'>
+                                UT
+                            </div>
+                            <div className='text-white w-full bg-[#bf5700] hover:bg-[#9d4700] transition-all duration-300 cursor-pointer font-bold text-4xl flex justify-center items-center'>
+                                is
+                            </div>
+                        </div>
+                        <div className='text-white w-full h-[110%] bg-[#bf5700] hover:bg-[#9d4700] transition-all duration-300 cursor-pointer font-bold text-4xl flex justify-center items-center'>
+                            Cool
+                        </div>
+                    </div>
+                </div>
+            </StickyHero>
+        </div>
+    )
+}
+
+export default UTHeroDemo
+```
+  </TabsContent>
+</Tabs>
+
+## Installation
+
+<Step>
+<StepItem title="Install dependencies">
+
+  ```bash
+  npm install framer-motion tailwind-merge clsx
+  ```
+
+</StepItem>
+<StepItem title="Add util file">
+  lib/utils.ts
+  ```ts
+  import { ClassValue, clsx } from "clsx";
+  import { twMerge } from "tailwind-merge";
+
+  export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+  }
+  ```
+
+</StepItem>
+<StepItem title="Copy the source code">
+<div className="highlight-text w-fit">components/ui/sticky-hero.tsx</div>
+```tsx
+'use client';
+import React, { ReactNode, useRef, useState } from 'react'
+import Image from 'next/image';
+
+interface StickyHeroProps {
+    heroText: ReactNode;
+    srcHero: string;
+    mediaType: string;
+    srcBelow: string;
+    children?: ReactNode;
+}
+
+export function StickyHero({
+    heroText,
+    srcHero,
+    mediaType,
+    srcBelow,
+    children
+}: StickyHeroProps) {
+    const [isPlaying, setIsPlaying] = useState<boolean>(true);
+    const videoRef = useRef<HTMLVideoElement | null>(null);
+
+    const togglePlay = () => {
+        if (mediaType === 'video' && videoRef.current) {
+            if (isPlaying) {
+                videoRef.current.pause();
+            } else {
+                videoRef.current.play();
+            }
+            setIsPlaying(!isPlaying);
+        }
+    };
+
+    return (
+        <div>
+            <div className='absolute h-screen flex items-center justify-start'>
+                {mediaType === 'video' ? (
+                    <video
+                        ref={videoRef}
+                        className="h-full w-full object-cover"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        src={srcHero}
+                    />
+                ) : (
+                    <Image
+                        className="h-full w-full object-cover"
+                        width={1920}
+                        height={1080}
+                        src={srcHero}
+                        alt="Hero background"
+                        priority
+                    />
+                )}
+
+                {!isPlaying && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent" />
+                )}
+
+                {mediaType === 'video' && (
+                    <div className="absolute bottom-14 right-5 p-4 z-50">
+                        <button
+                            onClick={togglePlay}
+                            className="rounded-full bg-white bg-opacity-40 p-3 hover:bg-opacity-60 transition-all cursor-pointer"
+                            aria-label={isPlaying ? 'Pause' : 'Play'}
+                        >
+                            {isPlaying ? (
+                                <svg className="w-8 h-8 text-black" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                                </svg>
+                            ) : (
+                                <svg className="w-8 h-8 text-black" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M8 5v14l11-7z" />
+                                </svg>
+                            )}
+                        </button>
+                    </div>
+                )}
+            </div>
+            <div className='relative h-[190vh]'>
+                <div className="sticky z-50 top-[30%] w-full flex justify-center mb-[5vh]">
+                    <h1
+                        className='z-50 text-left sm:text-[5rem] text-[3rem] max-w-6xl w-full leading-[0.8] font-black text-white mx-[2%]'
+                        style={{ textShadow: '1px 1px 1px rgba(51, 63, 72, 0.4)' }}
+                    >
+                        {heroText}
+                    </h1>
+                </div>
+                <Image
+                    className="z-[-2] fixed left-0 right-0 bottom-0 h-screen object-cover"
+                    width={1920}
+                    height={1080}
+                    src={srcBelow}
+                    alt="Hero background"
+                    priority
+                />
+                <div className="absolute bottom-0 inset-x-0 h-screen bg-gradient-to-t from-[#fd7e14]/70 to-transparent" />
+            </div>
+            <div>
+                {children}
+            </div>
+        </div>
+    )
+}
+```
+</StepItem>
+</Step>
+
+## Props
+
+|Prop          |Type        |Description |Default Value |
+| :------------ | :--------- | :---------- |:----------|
+| <span className="highlight-text">heroText</span>   | <span className="highlight-text">ReactNode</span>    | Main text for the hero | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">srcHero</span>   | <span className="highlight-text">string</span>    | Source path or link to the image or video | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">mediaType</span>   | <span className="highlight-text">string</span>    | "video" or "image" for the srcHero prop | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">srcBelow</span>   | <span className="highlight-text">string</span>    | Source path or link to the image below the main image or video | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">children</span>   | <span className="highlight-text">ReactNode</span>    | Components that will go under the heroText after its stickiness ends | <span className="highlight-text">undefined</span> |
+
+Inspired by <a href="https://www.utexas.edu/" target="_blank" rel="noopener noreferrer">UT Austin</a><br/>
+Video Credits: <a href="https://www.utexas.edu/" target="_blank" rel="noopener noreferrer">UT Austin</a>
