@@ -1,0 +1,172 @@
+---
+title: Zooming Image
+description: An image that zooms in as you scroll and a card for information
+keywords: ["image", "zoom", "animation", "scroll", "framer motion", "tailwind"]
+---
+
+<Tabs defaultValue="preview" className="pt-5 pb-1">
+  <TabsList className="">
+    <TabsTrigger value="preview">Preview</TabsTrigger>
+    <TabsTrigger value="code">Code</TabsTrigger>
+  </TabsList>
+  <TabsContent value="preview" className="">
+  <div className="preview not-prose flex w-full justify-center p-2 sm:p-10 items-center">
+    <ZoomingImageDemo/>
+  </div>
+  </TabsContent>
+  <TabsContent value="code">
+```tsx
+import React from 'react'
+import { ZoomingImage } from '@/components/ui/zooming-image'
+
+function ZoomingImageDemo() {
+  return (
+    <div>
+        <ZoomingImage 
+              src='https://cdn.prod.website-files.com/672b527122f8cda3897b9d71/672b527122f8cda3897b9efc_Solutions.avif'
+        >
+            <div className='h-[70vh] w-full lg:w-[50%] md:w-[70%] sm:w-[85%] bg-sky-300 flex items-center justify-center text-5xl font-black'>
+                Zoooooom
+            </div>
+        </ZoomingImage>
+    </div>
+  )
+}
+
+export default ZoomingImageDemo
+```
+  </TabsContent>
+</Tabs>
+
+## Installation
+
+<Step>
+<StepItem title="Install dependencies">
+
+  ```bash
+  npm install framer-motion tailwind-merge clsx
+  ```
+
+</StepItem>
+<StepItem title="Add util file">
+  lib/utils.ts
+  ```ts
+  import { ClassValue, clsx } from "clsx";
+  import { twMerge } from "tailwind-merge";
+
+  export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+  }
+  ```
+
+</StepItem>
+<StepItem title="Copy the source code">
+<div className="highlight-text w-fit">components/ui/zooming-image.tsx</div>
+```tsx
+'use client';
+import React, { useState, useRef, useEffect } from 'react';
+import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
+
+interface ZoomingImageProps {
+    src: string;
+    children: React.ReactNode;
+    height?: string;
+}
+
+export function ZoomingImage({
+    src,
+    children,
+    height = '135vh'
+}: ZoomingImageProps) {
+    const targetRef = useRef<HTMLDivElement | null>(null);
+    const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+    useEffect(() => {
+        const checkScreenSize = () => {
+            setIsSmallScreen(window.innerWidth < 640);
+        };
+        
+        checkScreenSize();
+        window.addEventListener('resize', checkScreenSize);
+        return () => {
+            window.removeEventListener('resize', checkScreenSize);
+        };
+    }, []);
+
+    const { scrollYProgress } = useScroll({
+        target: targetRef,
+        offset: ["start 0.2", "start start"],
+    });
+
+    const scale = useTransform(scrollYProgress, [0, 1], [0.5, 1]);
+
+    const { scrollYProgress: scrollYProgress1 } = useScroll({
+        target: targetRef,
+        offset: ["center center", "end end"],
+    });
+
+    const textY = useTransform(
+        scrollYProgress1,
+        [0, 1],
+        isSmallScreen ? [150, -20] : [-100, 10]
+    );
+
+    return (
+        <div className="relative" style={{ height }} ref={targetRef}>
+            <motion.div
+                style={{
+                    scale,
+                    height: "100vh",
+                }}
+                className="sticky top-0 w-full z-0"
+            >
+                <motion.div
+                    style={{
+                        height: "100%",
+                        width: "100%"
+                    }}
+                >
+                    <Image
+                        className="h-full w-full object-cover"
+                        width={1920}
+                        height={1080}
+                        src={src}
+                        alt="background"
+                        priority
+                    />
+                </motion.div>
+
+                <motion.div
+                    className="absolute inset-0"
+                />
+            </motion.div>
+            <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                style={{
+                    y: textY,
+                }}
+                className="absolute left-0 top-0 flex h-full w-full flex-col sm:items-end sm:justify-end items-center justify-end text-white sm:p-[10vh] p-[5%]"
+            >
+                {children}
+            </motion.div>
+        </div>
+    );
+}
+```
+</StepItem>
+</Step>
+
+## Props
+
+|Prop          |Type        |Description |Default Value |
+| :------------ | :--------- | :---------- |:----------|
+| <span className="highlight-text">src</span>   | <span className="highlight-text">string</span>    | Source path or link to the image that will be zoomed in on | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">children</span>   | <span className="highlight-text">ReactNode</span>    | The element of text that will go on the button | <span className="highlight-text">undefined</span> |
+| <span className="highlight-text">height</span>   | <span className="highlight-text">string</span>    | Total scroll height of the image and card combined | <span className="highlight-text">"135vh"</span> |
+
+Inspired by <a href="https://www.bec.uk/" target="_blank" rel="noopener noreferrer">the be company</a><br/>
+Image Credits: <a href="https://www.bec.uk/" target="_blank" rel="noopener noreferrer">the be company</a>
