@@ -24,6 +24,7 @@ import CurvedCarouselDemo from "@/components/demos/CurvedCarouselDemo";
 import HighlightTextDemo from "@/components/demos/HighlightTextDemo";
 import OutlineTextDemo from "@/components/demos/OutlineTextDemo";
 import ZoomingImageDemo from "@/components/demos/ZoomingImageDemo";
+import LineScrollDemo from "@/components/demos/LineScrollDemo";
 
 export const components = {
     a: RoutedLink as React.ComponentType<React.AnchorHTMLAttributes<HTMLAnchorElement>>,
@@ -50,5 +51,6 @@ export const components = {
     CurvedCarouselDemo,
     HighlightTextDemo,
     OutlineTextDemo,
-    ZoomingImageDemo
+    ZoomingImageDemo,
+    LineScrollDemo
 };

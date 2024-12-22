@@ -14,9 +14,13 @@ export const Documents: Paths[] = [
     spacer: true,
   },
   {
+    title: "Line Scroll",
+    href: "/line-scroll",
+    heading: "Components",
+  },
+  {
     title: "Zooming Image",
     href: "/zooming-image",
-    heading: "Components",
   },
   {
     title: "UT Hero Section",
